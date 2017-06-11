@@ -1,2 +1,25 @@
-<h1>Ajouter un commentaire</h1>
-<p>Vous êtes connecté !</p>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-8">
+
+            <h1>Commentaires</h1>
+
+            {% for comment in comments %}
+                <p>
+                    <strong>{{  comment.user.username }}</strong><br>
+                    {{ comment.content }}
+
+                </p>
+            {% endfor %}
+
+            <h1>Ajouter un commentaire</h1>
+
+            {{  form_start(form) }}
+                {{  form_widget(form) }}
+                <button type="submit" class="btn btn-primary">Commenter</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

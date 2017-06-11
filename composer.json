@@ -34,6 +34,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "liip/functional-test-bundle": "^1.7",
+        "phpunit/phpunit": "^5.7",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
     },

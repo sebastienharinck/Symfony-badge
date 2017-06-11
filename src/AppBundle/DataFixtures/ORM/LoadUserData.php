@@ -28,6 +28,7 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
         $user = new User();
         $user->setEmail('john@doe.fr');
         $user->setPassword($encoder->encodePassword($user, '0000'));
+        $this->setReference('user', $user);
 
         $manager->persist($user);
         $manager->flush();
