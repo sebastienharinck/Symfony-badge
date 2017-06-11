@@ -25,14 +25,23 @@ class CommentController extends Controller {
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($comment);
+            $em->getConnection()->beginTransaction();
             $em->flush();
+
+            //Déblocage du badge
+            $comments_count = $em->getRepository('AppBundle:Comment')->countForUser($user->getId());
+            $this->get('badge.manager')->checkAndUnlock($user, 'comment', $comments_count);
+
+            $em->getConnection()->commit();
         }
 
         $comments = $em->getRepository('AppBundle:Comment')->findAll();
+        $badges = $this->get('badge.manager')->getBadgeFor($user);
 
         return $this->render('comment/new.html.twig', [
             'comments'  => $comments,
             'form'      => $form->createView(),
+            'badges'    => $badges,
         ]);
     }
 }

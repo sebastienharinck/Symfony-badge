@@ -2,6 +2,7 @@
 
 namespace Tests\AppBundle\Controller;
 
+use AppBundle\DataFixtures\ORM\LoadBadgeData;
 use AppBundle\DataFixtures\ORM\LoadUserData;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
@@ -18,7 +19,11 @@ class CommentControllerTest extends WebTestCase {
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $referencies = $this->loadFixtures([LoadUserData::class])->getReferenceRepository();
+        $referencies = $this->loadFixtures([
+            LoadUserData::class,
+            LoadBadgeData::class,
+        ])->getReferenceRepository();
+
         $user = $referencies->getReference('user');
         $this->loginAs($user, 'main');
         $client = $this->makeClient();
@@ -35,6 +40,7 @@ class CommentControllerTest extends WebTestCase {
         $this->assertStatusCode('200', $client);
 
         $this->assertCount(1, $em->getRepository('AppBundle:Comment')->findAll());
+        $this->assertCount(1, $em->getRepository('BadgeBundle:BadgeUnlock')->findAll());
     }
 
 }

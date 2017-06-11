@@ -1,0 +1,4 @@
+services:
+    badge.manager:
+        class: Seb\BadgeBundle\Manager\BadgeManager
+        arguments: ['@doctrine.orm.entity_manager']
